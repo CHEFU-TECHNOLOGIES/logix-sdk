@@ -1,0 +1,47 @@
+{
+    "name": "@chefu-tech/logix-next",
+    "version": "1.0.0",
+    "description": "A lightweight npm package for working with logix setting up your logging pipeline within one minute",
+    "type": "module",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "require": "./dist/index.cjs"
+        }
+    },
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "clean": "rimraf dist",
+        "build": "tsup src/index.ts --format cjs,esm --dts",
+        "prepublishOnly": "npm run clean && npm run build"
+    },
+    "keywords": [
+        "logs",
+        "logix",
+        "structured-logging",
+        "monitoring",
+        "observability",
+        "audit",
+        "security"
+    ],
+    "author": "CHEFU Technologies",
+    "license": "MIT",
+    "homepage": "https://logix.chefu.co.za",
+    "peerDependencies": {
+        "react": ">=18.0.0",
+        "react-dom": ">=18.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "^22.0.0",
+        "@types/react": "^19.0.0",
+        "rimraf": "^6.0.0",
+        "tsup": "^8.0.0",
+        "typescript": "^5.0.0"
+    }
+}

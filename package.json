@@ -1,6 +1,6 @@
 {
     "name": "@chefu-tech/logix-next",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A lightweight npm package for working with logix setting up your logging pipeline within one minute",
     "type": "module",
     "main": "./dist/index.cjs",
@@ -20,6 +20,13 @@
         "clean": "rimraf dist",
         "build": "tsup src/index.ts --format cjs,esm --dts",
         "prepublishOnly": "npm run clean && npm run build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/CHEFU-TECHNOLOGIES/logix-sdk.git"
+    },
+    "bugs": {
+        "url": "https://github.com/CHEFU-TECHNOLOGIES/logix-sdk/issues"
     },
     "keywords": [
         "logs",

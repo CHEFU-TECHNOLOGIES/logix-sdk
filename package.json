@@ -1,6 +1,6 @@
 {
     "name": "@chefu-tech/logix-next",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "A lightweight npm package for working with logix setting up your logging pipeline within one minute",
     "type": "module",
     "main": "./dist/index.cjs",

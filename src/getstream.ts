@@ -24,12 +24,15 @@ export function getStream(filters?: Record<string, string>): GetStreamResult {
         const qs = searchParams.toString();
         const url = `/api/1minute-logs/stream${qs ? `?${qs}` : ''}`;
 
-        const es = new EventSource(url);
+        const es = new EventSource(url, { withCredentials: true });
         esRef.current = es;
 
-        setConnected(true);
         setIsLoading(true);
         setError(null);
+
+        es.onopen = () => {
+            setConnected(true);
+        };
 
         es.onmessage = (event) => {
             try {

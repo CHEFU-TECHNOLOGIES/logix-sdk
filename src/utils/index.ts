@@ -8,7 +8,7 @@ import type {
 export class OMLTransport {
     private config: LoggerConfig;
     private buffer: LogPayload[] = [];
-    private timer: NodeJS.Timeout | null = null;
+    private timer: ReturnType<typeof setTimeout> | null = null;
 
     constructor(config: LoggerConfig) {
         this.config = config;
@@ -33,10 +33,9 @@ export class OMLTransport {
         if (this.buffer.length === 0) return;
 
         const logsToSend = [...this.buffer];
-        this.buffer = [];
 
         try {
-            await fetch(`${this.config.endpoint || 'http://localhost:3000'}/logs/send`, {
+            const response = await fetch(`${this.config.endpoint || 'http://localhost:3000'}/logs/send`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -44,8 +43,18 @@ export class OMLTransport {
                 },
                 body: JSON.stringify({ logs: logsToSend }),
             });
+
+            if (!response.ok) {
+                throw new Error(`Logix ingestion failed with HTTP ${response.status}`);
+            }
+
+            this.buffer.splice(0, logsToSend.length);
         } catch (err) {
-            console.error('Failed to send log batch:', err);
+            console.error('Failed to send log batch; retaining events for retry:', err);
+
+            if (!this.timer) {
+                this.timer = setTimeout(() => this.flush(), this.config.flushInterval || 2000);
+            }
         }
     }
 
